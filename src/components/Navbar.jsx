@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+// import { AuthContext } from "../contexts/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../features/auth/authSlice";
 
 function Navbar() {
+  // const {userLogout,login}=useContext(AuthContext)
+  const dispatch = useDispatch();
+  const login = useSelector((state) => state.auth.login);
+
   return (
     <div className="w-screen bg-white flex text-black justify-between h-[80px] items-center">
       <div className="flex items-baseline gap-9 ml-6">
@@ -33,6 +40,10 @@ function Navbar() {
           </NavLink>
         </div>
       </div>
+      <h1>{login?.username}</h1>
+      <button onClick={()=>dispatch(userLogout())}>
+        LOG OUT
+      </button>
       <div className="mr-6 flex items-center justify-center text-xl font-extrabold bg-amber-200 w-[45px] h-[45px] rounded-3xl">
         AS
       </div>

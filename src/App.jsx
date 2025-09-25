@@ -7,24 +7,37 @@ import Deleted from "./pages/Deleted";
 import ErrorPage from "./pages/ErrorPage";
 import Tasks from "./pages/Tasks";
 import { TaskProvider } from "./contexts/TaskContext";
+import Login from "./pages/Login";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
+
 
 function App() {
   return (
     <BrowserRouter>
-      <TaskProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Tasks />} /> 
-            <Route path="completed" element={<Completed />} />
-            <Route path="deleted" element={<Deleted />} />
-          </Route>
-          <Route element={<SimpleLayout />}>
-            {/* <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} /> */}
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </TaskProvider>
+      <AuthProvider>
+        <TaskProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <MainLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Tasks />} />
+              <Route path="completed" element={<Completed />} />
+              <Route path="deleted" element={<Deleted />} />
+            </Route>
+            <Route element={<SimpleLayout />}>
+              <Route path="login" element={<Login />} />
+              {/* <Route path="signup" element={<Signup />} /> */}
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
+          </Routes>
+        </TaskProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

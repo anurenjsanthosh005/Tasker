@@ -4,7 +4,7 @@ import { TaskContext } from "../../contexts/TaskContext";
 
 function TodoCard(props) {
   const { task, number, buttonConfig } = props;
-  const { handleCompleted, handleRedo, handleDelete ,handleEditOpen} =
+  const { handleCompleted, handleRedo, handleDelete ,editOpen} =
     useContext(TaskContext);
 
   return (
@@ -32,7 +32,7 @@ function TodoCard(props) {
           </Button>
         )}
         {buttonConfig.showEdit && (
-          <Button onClick={()=>handleEditOpen(task.id)}>
+          <Button onClick={()=>editOpen(task.id)}>
             <i className="fa-solid fa-pen-to-square"></i>
           </Button>
         )}
